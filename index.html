@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serial Voltage Reader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .voltage-display {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2196F3;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .connect-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .disconnect-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Serial Voltage Monitor</h1>
+    <button class="connect-btn" onclick="connectSerial()">Connect Serial</button>
+    <button class="disconnect-btn" onclick="disconnectSerial()">Disconnect</button>
+    
+    <div class="voltage-display" id="voltage">Voltage: -- V</div>
+    <div id="status">Status: Disconnected</div>
+</body>
+</html>
