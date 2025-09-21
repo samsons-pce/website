@@ -1,69 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Serial Voltage Reader</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin: 10px;
-    }
-    #output {
-      margin-top: 20px;
-      font-size: 28px;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-  <h2>Solar Cell Voltage Reader</h2>
-  <button id="connectBtn">Connect to Serial</button>
-  <div id="output">No data yet</div>
-
-  <script>
-    let port;
-    let reader;
-    let buffer = "";
-
-    document.getElementById("connectBtn").addEventListener("click", async () => {
-      try {
-        // Request a serial port
-        port = await navigator.serial.requestPort();
-        await port.open({ baudRate: 9600 });
-
-        const decoder = new TextDecoderStream();
-        port.readable.pipeTo(decoder.writable);
-        reader = decoder.readable.getReader();
-
-        readLoop();
-      } catch (err) {
-        console.error("Error:", err);
-        document.getElementById("output").innerText = "Connection failed!";
-      }
-    });
-
-    async function readLoop() {
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        if (value) {
-          buffer += value; // accumulate chunks
-          let lines = buffer.split("\n");
-          buffer = lines.pop(); // keep last partial line
-          for (let line of lines) {
-            let num = parseFloat(line.trim());
-            if (!isNaN(num)) {
-              document.getElementById("output").innerText = num.toFixed(2) + " V";
-            }
-          }
-        }
-      }
-    }
-  </script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
